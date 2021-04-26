@@ -1,7 +1,7 @@
 function importPLY(file) {
     lines = file.replace(/\r/g, "").split(/\n/)
 
-    polygons = [];
+    faces = [];
     points = [];
     allXPoints = [];
     allYPoints = [];
@@ -11,16 +11,16 @@ function importPLY(file) {
     for (i = 0; i < 10; i++) {
         sub = lines[i].substring(0, 12);
         if (sub == 'element vert') {
-            verts = parseInt(lines[i].split(" ")[2]);
+            numberOfVertices = parseInt(lines[i].split(" ")[2]);
         }
         if (sub == 'element face') {
-            faces = parseInt(lines[i].split(" ")[2]);
+            numberOfFaces = parseInt(lines[i].split(" ")[2]);
         }
     }
 
     //find verts and faces start indexs
-    vertsindex = lines.length - faces - 1 - verts;
-    facesindex = lines.length - faces - 1;
+    vertsindex = lines.length - numberOfFaces - 1 - numberOfVertices;
+    facesindex = lines.length - numberOfFaces - 1;
 
     // console.log(vertsindex);
     // console.log(lines[vertsindex]);
@@ -45,30 +45,31 @@ function importPLY(file) {
     minY = (Math.min.apply(Math, allYPoints));
     minZ = (Math.min.apply(Math, allZPoints));
 
+    //moves all points to positive values and scales them by 100
     for (let p = 0; p < points.length; p++) {
         points[p][0] = (points[p][0] + Math.abs(minX)) * 100;
         points[p][1] = (points[p][1] + Math.abs(minY)) * 100;
         points[p][2] = (points[p][2] + Math.abs(minZ)) * 100;
     }
 
-    //populate polygons array
+    //populate faces array
     for (f = facesindex; f < lines.length - 1; f++) {
         sep = lines[f].split(" ");
-        polygon = new Array();
+        face = new Array();
         for (p = 1; p <= parseInt(sep[0]); p++) {
-            polygon[p - 1] = points[sep[p]];
-            // console.log(polygon[p - 1]);
+            face[p - 1] = points[sep[p]];
+            // console.log(face[p - 1]);
         }
-        polygons.push(polygon);
+        faces.push(face);
 
     }
-    polygons = JSON.parse(JSON.stringify(polygons))
-    return polygons;
+    faces = JSON.parse(JSON.stringify(faces))
+    return faces;
 
 }
 
 // importedObj = importPLY(cubePLY);
 // importedObj = importPLY(monke);
 importedObj = importPLY(blob);
-console.log(importedObj);
+// console.log(importedObj);
 // document.write(JSON.stringify(importedObj));

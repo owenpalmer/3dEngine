@@ -7,34 +7,37 @@ function toRadians(num) {
 }
 
 function rotatePoint(oX, oY, rX, rY, rotDeg) {
-    //PP
-    if (rX >= oX && rY >= oY) {
-        rotDeg = rotDeg * -1;
-        Xposneg = 1;
-        Yposneg = 1;
-    }
-    //NN
-    if (rX < oX && rY < oY) {
-        rotDeg = rotDeg * -1;
-        Xposneg = -1;
-        Yposneg = -1;
-    }
-    //PN
-    if (rX >= oX && rY < oY) {
-        Xposneg = 1;
-        Yposneg = -1;
-    }
-    //NP
-    if (rX < oX && rY >= oY) {
-        Xposneg = -1;
-        Yposneg = 1;
-    }
+    Xposneg = Math.sign((rX + .1) - oX);
+    Yposneg = Math.sign((rY + .1) - oY);
+    rotDeg = rotDeg * (Math.sign(Xposneg * Yposneg) * -1);
+    // //PP
+    // if (rX >= oX && rY >= oY) {
+    //     rotDeg = rotDeg * -1;
+    //     Xposneg = 1;
+    //     Yposneg = 1;
+    // }
+    // //NN
+    // if (rX < oX && rY < oY) {
+    //     rotDeg = rotDeg * -1;
+    //     Xposneg = -1;
+    //     Yposneg = -1;
+    // }
+    // //PN
+    // if (rX >= oX && rY < oY) {
+    //     Xposneg = 1;
+    //     Yposneg = -1;
+    // }
+    // //NP
+    // if (rX < oX && rY >= oY) {
+    //     Xposneg = -1;
+    //     Yposneg = 1;
+    // }
 
     opo = Math.abs(oY - rY);
     adj = Math.abs(oX - rX);
 
-    drawpoint(oX, oY, "O");
-    drawpoint(rX, rY, "R");
+    // drawpoint(oX, oY, "O");
+    // drawpoint(rX, rY, "R");
 
     hypo = Math.sqrt(opo ** 2 + adj ** 2);
 
@@ -49,7 +52,7 @@ function rotatePoint(oX, oY, rX, rY, rotDeg) {
     return [x, y];
 }
 
-function rotateAllPoints(array, oX, oY, deg, axis1, axis2) {
+function rotateObjectPoints(array, oX, oY, deg, axis1, axis2) {
     //loops over all entities
     for (ent = 0; ent < array.length; ent++) {
         //loops over all points in the entity

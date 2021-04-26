@@ -26,7 +26,7 @@ function drawline3d(array, axis1, axis2, color = "red") {
     ctx.stroke();
 }
 
-function drawPoly3d(array, axis1, axis2, color = "red") {
+function drawFace(array, axis1, axis2, color = "red") {
     for (i = 0; i < array.length; i++) {
         // console.log(array[i]);
         if (i == array.length - 1) {
@@ -34,7 +34,6 @@ function drawPoly3d(array, axis1, axis2, color = "red") {
         } else {
             n = i + 1;
         }
-        // drawline3d([array[i][axis1], array[i][axis2]], axis1, axis2, color);
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -46,7 +45,7 @@ function drawPoly3d(array, axis1, axis2, color = "red") {
 
 function drawObject(array, axis1, axis2) {
     for (ent = 0; ent < array.length; ent++) {
-        drawPoly3d(array[ent], axis1, axis2);
+        drawFace(array[ent], axis1, axis2);
     }
 }
 
