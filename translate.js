@@ -6,12 +6,10 @@ function translatePoint(array, x = 0, y = 0, z = 0) {
 }
 
 function translateObject(array, x = 0, y = 0, z = 0) {
-    for (let poly = 0; poly < array.length; poly++) {
-        for (let point = 0; point < array[poly].length; point++) {
-            array[poly][point][0] = array[poly][point][0] + x;
-            array[poly][point][1] = array[poly][point][1] + y;
-            array[poly][point][2] = array[poly][point][2] + z;
-        }
+    for (let point = 0; point < array.length; point++) {
+        array[point][0] = array[point][0] + x;
+        array[point][1] = array[point][1] + y;
+        array[point][2] = array[point][2] + z;
     }
 }
 

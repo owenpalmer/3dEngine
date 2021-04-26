@@ -1,0 +1,9 @@
+point:set of 3 coordinates
+
+line:set of 2 points
+
+face:set of 3 or more points
+
+entity:a face, a line, or a point
+
+object:

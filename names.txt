@@ -1,7 +1,0 @@
-point:A set of 3 coordinates
-
-line:A set of 2 points
-
-face:A set of 3 or more points
-
-entity:A face, a line, or a point

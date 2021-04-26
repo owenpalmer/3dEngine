@@ -27,25 +27,31 @@ function drawline3d(array, axis1, axis2, color = "red") {
 }
 
 function drawFace(array, axis1, axis2, color = "red") {
-    for (i = 0; i < array.length; i++) {
-        // console.log(array[i]);
-        if (i == array.length - 1) {
+    for (point = 0; point < array.length; point++) {
+        if (point == array.length - 1) {
             n = 0;
         } else {
-            n = i + 1;
+            n = point + 1;
         }
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(array[i][axis1], array[i][axis2]);
+        ctx.moveTo(array[point][axis1], array[point][axis2]);
         ctx.lineTo(array[n][axis1], array[n][axis2]);
         ctx.stroke();
     }
 }
 
-function drawObject(array, axis1, axis2) {
-    for (ent = 0; ent < array.length; ent++) {
-        drawFace(array[ent], axis1, axis2);
+function drawObject(object, axis1, axis2) {
+    points = object.points;
+    faces = object.faces;
+    for (face = 0; face < faces.length; face++) {
+        compiledface = [];
+        for (i = 1; i <= faces[face][0]; i++) {
+            pointindex = faces[face][i];
+            compiledface.push(points[pointindex]);
+        }
+        drawFace(compiledface, axis1, axis2);
     }
 }
 

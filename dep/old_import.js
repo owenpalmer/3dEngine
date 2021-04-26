@@ -22,6 +22,10 @@ function importPLY(file) {
     vertsindex = lines.length - numberOfFaces - 1 - numberOfVertices;
     facesindex = lines.length - numberOfFaces - 1;
 
+    // console.log(vertsindex);
+    // console.log(lines[vertsindex]);
+    // console.log(lines[facesindex]);
+
     //populate and index point arrays
     for (v = vertsindex; v < facesindex; v++) {
         sep = lines[v].split(" ");
@@ -50,18 +54,22 @@ function importPLY(file) {
 
     //populate faces array
     for (f = facesindex; f < lines.length - 1; f++) {
-        seperated = lines[f].split(" ");
-        for (pointindex = 0; pointindex < seperated.length; pointindex++) {
-            seperated[pointindex] = parseInt(seperated[pointindex]);
+        sep = lines[f].split(" ");
+        face = new Array();
+        for (p = 1; p <= parseInt(sep[0]); p++) {
+            face[p - 1] = points[sep[p]];
+            // console.log(face[p - 1]);
         }
-        faces.push(seperated);
+        faces.push(face);
+
     }
     faces = JSON.parse(JSON.stringify(faces))
-    return { "points": points, "faces": faces };
+    return faces;
 
 }
 
 // importedObj = importPLY(cubePLY);
-importedObj = importPLY(blob);
 // importedObj = importPLY(monke);
-console.log(importedObj);
+importedObj = importPLY(blob);
+// console.log(importedObj);
+// document.write(JSON.stringify(importedObj));

@@ -52,14 +52,10 @@ function rotatePoint(oX, oY, rX, rY, rotDeg) {
     return [x, y];
 }
 
-function rotateObjectPoints(array, oX, oY, deg, axis1, axis2) {
-    //loops over all entities
-    for (ent = 0; ent < array.length; ent++) {
-        //loops over all points in the entity
-        for (point = 0; point < array[ent].length; point++) {
-            rot = rotatePoint(oX, oY, array[ent][point][axis1], array[ent][point][axis2], deg);
-            array[ent][point][axis1] = rot[0];
-            array[ent][point][axis2] = rot[1];
-        }
+function rotateObject(array, oX, oY, deg, axis1, axis2) {
+    for (point = 0; point < array.length; point++) {
+        rot = rotatePoint(oX, oY, array[point][axis1], array[point][axis2], deg);
+        array[point][axis1] = rot[0];
+        array[point][axis2] = rot[1];
     }
 }
