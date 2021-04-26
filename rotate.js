@@ -39,7 +39,6 @@ function rotatePoint(oX, oY, rX, rY, rotDeg) {
     hypo = Math.sqrt(opo ** 2 + adj ** 2);
 
     current_angle = toDegrees(Math.atan(opo / adj));
-
     next_angle = current_angle + rotDeg;
 
     testY = (Math.sin(toRadians(next_angle)) * hypo);
@@ -50,16 +49,14 @@ function rotatePoint(oX, oY, rX, rY, rotDeg) {
     return [x, y];
 }
 
-function rotateObject(array, oX, oY, deg, axis1, axis2) {
-    for (i = 0; i < array.length; i++) {
-        //first point
-        rot = rotatePoint(oX, oY, array[i][0][axis1], array[i][0][axis2], deg);
-        array[i][0][0] = rot[0];
-        array[i][0][1] = rot[1];
-
-        //second point
-        rot = rotatePoint(oX, oY, array[i][1][axis1], array[i][1][axis2], deg);
-        array[i][1][0] = rot[0];
-        array[i][1][1] = rot[1];
+function rotateAllPoints(array, oX, oY, deg, axis1, axis2) {
+    //loops over all entities
+    for (ent = 0; ent < array.length; ent++) {
+        //loops over all points in the entity
+        for (point = 0; point < array[ent].length; point++) {
+            rot = rotatePoint(oX, oY, array[ent][point][axis1], array[ent][point][axis2], deg);
+            array[ent][point][axis1] = rot[0];
+            array[ent][point][axis2] = rot[1];
+        }
     }
 }

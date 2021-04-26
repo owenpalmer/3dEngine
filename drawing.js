@@ -1,4 +1,5 @@
 var ctx = document.getElementById("c").getContext('2d');
+var canvas = document.getElementById("c");
 
 function drawlinesimple(x1, y1, x2, y2, color = 'black') {
     ctx.beginPath();
@@ -16,12 +17,37 @@ function drawline(array) {
     ctx.stroke();
 }
 
-function drawline3d(array, axis1, axis2) {
-    ctx.strokeStyle = "red";
+function drawline3d(array, axis1, axis2, color = "red") {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 7;
     ctx.beginPath();
     ctx.moveTo(array[0][axis1], array[0][axis2]);
     ctx.lineTo(array[1][axis1], array[1][axis2]);
     ctx.stroke();
+}
+
+function drawPoly3d(array, axis1, axis2, color = "red") {
+    for (i = 0; i < array.length; i++) {
+        // console.log(array[i]);
+        if (i == array.length - 1) {
+            n = 0;
+        } else {
+            n = i + 1;
+        }
+        // drawline3d([array[i][axis1], array[i][axis2]], axis1, axis2, color);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(array[i][axis1], array[i][axis2]);
+        ctx.lineTo(array[n][axis1], array[n][axis2]);
+        ctx.stroke();
+    }
+}
+
+function drawObject(array, axis1, axis2) {
+    for (ent = 0; ent < array.length; ent++) {
+        drawPoly3d(array[ent], axis1, axis2);
+    }
 }
 
 function drawpoint(x, y, note = "") {
@@ -48,4 +74,3 @@ function drawgrid(inc) {
     }
 }
 
-drawgrid(100);

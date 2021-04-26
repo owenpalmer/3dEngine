@@ -137,10 +137,6 @@ function mk3dtriangle(x1, y1, z1, x2, y2, z2, x3, y3, z3) {
 
 triangle = mktriangle(100, 100, 150, 300, 500, 600);
 
-
-
-badline = mkline(250, 200, 250, 500);
-
 triangle = [
     [
         [100, 100],
@@ -155,6 +151,8 @@ triangle = [
         [100, 100],
     ],
 ];
+
+height = 300;
 
 pyramid = [
     [
@@ -175,38 +173,18 @@ pyramid = [
     ],
     [
         [0, 0, 0],
-        [150, 150, 200],
+        [150, 150, height],
     ],
     [
         [300, 0, 0],
-        [150, 150, 200],
+        [150, 150, height],
     ],
     [
         [300, 300, 0],
-        [150, 150, 200],
+        [150, 150, height],
     ],
     [
         [0, 300, 0],
-        [150, 150, 200],
+        [150, 150, height],
     ],
 ];
-
-rotateObject(pyramid, 100, 100, 45, 0, 2);
-rotateObject(pyramid, 100, 100, 45, 0, 1);
-
-for (i = 0; i < pyramid.length; i++) {
-    drawline3d(pyramid[i], 0, 1);
-}
-
-
-// for (i = 0; i < triangle.length; i++) {
-//     //first point
-//     rot = rotatePoint(500, 500, triangle[i][0][0], triangle[i][0][1], 10);
-//     triangle[i][0][0] = rot[0];
-//     triangle[i][0][1] = rot[1];
-//     //second point
-//     rot = rotatePoint(500, 500, triangle[i][1][0], triangle[i][1][1], 10);
-//     triangle[i][1][0] = rot[0];
-//     triangle[i][1][1] = rot[1];
-//     drawline3d(triangle[i], 0, 1);
-// }
