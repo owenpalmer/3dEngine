@@ -18,7 +18,7 @@ function importPLY(file) {
         }
     }
 
-    //find verts and faces start indexs
+    //find verts and faces start indices
     vertsindex = lines.length - numberOfFaces - 1 - numberOfVertices;
     facesindex = lines.length - numberOfFaces - 1;
 
