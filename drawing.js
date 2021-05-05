@@ -27,33 +27,67 @@ function drawline3d(array, axis1, axis2, color = "red") {
 }
 
 function drawFace(array, axis1, axis2, color = "red") {
+    ctx.fillStyle = "grey";
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
     for (point = 0; point < array.length; point++) {
         if (point == array.length - 1) {
             n = 0;
         } else {
             n = point + 1;
         }
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(array[point][axis1], array[point][axis2]);
+        if (point == 0) {
+            ctx.moveTo(array[point][axis1], array[point][axis2]);
+        } else {
+            ctx.lineTo(array[point][axis1], array[point][axis2]);
+        }
         ctx.lineTo(array[n][axis1], array[n][axis2]);
-        ctx.stroke();
     }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
 }
 
-function drawObject(object, axis1, axis2) {
+function drawObject(object, axis1, axis2, color = "red") {
     points = object.points;
     faces = object.faces;
-    for (face = 0; face < faces.length; face++) {
+    compiledfaces = [];
+    zeroDimension = Math.abs((axis1 + axis2) - 3);
+    // console.log(zeroDimension);
+    // zeroDimension = 2;
+    orderedList = [];
+
+    for (let face = 0; face < faces.length; face++) {
         compiledface = [];
         for (i = 1; i <= faces[face][0]; i++) {
             pointindex = faces[face][i];
             compiledface.push(points[pointindex]);
         }
-        drawFace(compiledface, axis1, axis2);
+        compiledfaces.push(compiledface);
     }
+    compiledfaces = JSON.parse(JSON.stringify(compiledfaces));
+    // console.log(compiledfaces);
+    for (let face = 0; face < compiledfaces.length; face++) {
+        sum = 0;
+        // console.log(compiledfaces[face]);
+        for (let point = 0; point < compiledfaces[face].length; point++) {
+            sum += compiledfaces[face][point][zeroDimension];
+        }
+        average = sum / compiledfaces[face].length;
+        orderedList.push({ average: average, faceindex: face });
+    }
+
+    orderedList.sort((a, b) => { return a.average - b.average; });
+
+    for (let face = 0; face < orderedList.length; face++) {
+        faceindex = orderedList[face].faceindex;
+        array = compiledfaces[faceindex];
+        drawFace(array, axis1, axis2, color);
+    }
+
 }
+
 
 function drawpoint(x, y, note = "") {
     ctx.beginPath();
