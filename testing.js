@@ -1,37 +1,61 @@
-drawgrid(100);
-translateObject(importedObj.points, 160, 200, 180)
+renderScene(defaultScene);
 
-// for (f = 0; f < 5; f++) {
-//     console.log(importedObj.faces[f]);
-//     for (i = 1; i <= importedObj.faces[f][0]; i++) {
-//         pointindex = importedObj.faces[f][i];
-//         console.log(importedObj.points[pointindex]);
-//     }
-// }
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        // y: canvas.height - (evt.clientY - rect.top)
+        y: evt.clientY - rect.top
+    };
+}
 
+function mouseMoveFunction(evt, downX, downY) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    mousePos = getMousePos(canvas, evt);
 
-rotateObject(importedObj.points, 300, 300, 40, 0, 1);
-rotateObject(importedObj.points, 300, 300, 60, 1, 2);
-drawObject(importedObj, 0, 1);
+    defaultScene.navTransforms.orbitZ += (downX - (mousePos.x)) / 100;
+    defaultScene.navTransforms.orbitY += (downY - (mousePos.y)) / 100;
 
-randomColor = Math.floor(Math.random() * 16777215).toString(16);
-console.log(randomColor);
+    renderScene(defaultScene);
+}
 
-// drawObject(square1, 0, 1);
-// drawObject(square2, 0, 1);
+canvas.addEventListener('mousedown', function (evt) {
+    mousePos = getMousePos(canvas, evt);
 
+    pressedMouse = true;
 
-// drawObject(square1, 0, 2, "blue");
-// drawObject(square2, 0, 2, "blue");
+    canvas.onmouseup = function (evt) {
+        pressedMouse = false;
+    }
 
-for (time = 0; time < 500; time++) {
-    setTimeout(function () {
+    downX = mousePos.x;
+    downY = mousePos.y;
+
+    canvas.onmousemove = function (evt) {
+        if (pressedMouse == true) {
+            mouseMoveFunction(evt, downX, downY);
+        }
+    }
+
+}, false);
+
+canvas.addEventListener('wheel', checkScrollDirection);
+
+function checkScrollDirection(event) {
+    if (checkScrollDirectionIsUp(event)) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawgrid(100);
-        rotateObject(importedObj.points, 300, 300, .5, 0, 2);
-        rotateObject(importedObj.points, 300, 300, .1, 0, 1);
-        // scaleObject(importedObj.points, 0, 0, 0);
-        drawObject(importedObj, 0, 1);
+        defaultScene.navTransforms.zoom += .1;
+        renderScene(defaultScene);
+    } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        defaultScene.navTransforms.zoom -= .1;
+        renderScene(defaultScene);
+    }
+}
 
-    }, 20 * time)
+function checkScrollDirectionIsUp(event) {
+    if (event.wheelDelta) {
+        return event.wheelDelta > 0;
+    }
+    return event.deltaY < 0;
 }

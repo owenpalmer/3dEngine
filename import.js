@@ -43,9 +43,19 @@ function importPLY(file) {
 
     //moves all points to positive values and scales them by 100
     for (let p = 0; p < points.length; p++) {
-        points[p][0] = (points[p][0] + Math.abs(minX)) * 100;
-        points[p][1] = (points[p][1] + Math.abs(minY)) * 100;
-        points[p][2] = (points[p][2] + Math.abs(minZ)) * 100;
+        points[p][0] = points[p][0] * 100;
+        points[p][1] = points[p][1] * 100;
+        points[p][2] = points[p][2] * 100;
+    }
+
+    //create the origin at the median of all points
+    origin = createObjectOriginFromPoints(points);
+
+    //set all point coorinates relative to the origin
+    for (let p = 0; p < points.length; p++) {
+        points[p][0] = points[p][0] - origin[0];
+        points[p][1] = points[p][1] - origin[1];
+        points[p][2] = points[p][2] - origin[2];
     }
 
     //populate faces array
@@ -57,11 +67,25 @@ function importPLY(file) {
         faces.push(seperated);
     }
     faces = JSON.parse(JSON.stringify(faces))
-    return { "points": points, "faces": faces };
+    return { points: points, faces: faces, origin, transformations: [] };
 
 }
 
-// importedObj = importPLY(cubePLY);
-// importedObj = importPLY(blob);
-importedObj = importPLY(monke);
-console.log(importedObj);
+function createObjectOriginFromPoints(points) {
+    sumOfx = 0;
+    sumOfy = 0;
+    sumOfz = 0;
+    for (let p = 0; p < points.length; p++) {
+        sumOfx += points[p][0];
+        sumOfy += points[p][1];
+        sumOfz += points[p][2];
+    }
+    x = sumOfx / points.length;
+    y = sumOfy / points.length;
+    z = sumOfz / points.length;
+    return [x, y, z];
+}
+
+cube = importPLY(cube);
+monke = importPLY(monke);
+blob = importPLY(blob);

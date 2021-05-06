@@ -27,7 +27,9 @@ function drawline3d(array, axis1, axis2, color = "red") {
 }
 
 function drawFace(array, axis1, axis2, color = "red") {
-    ctx.fillStyle = "grey";
+    randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    ctx.fillStyle = "#" + randomColor;
+    ctx.fillStyle = "black";
     ctx.strokeStyle = "red";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -70,11 +72,15 @@ function drawObject(object, axis1, axis2, color = "red") {
     // console.log(compiledfaces);
     for (let face = 0; face < compiledfaces.length; face++) {
         sum = 0;
+        listForMax = [];
         // console.log(compiledfaces[face]);
         for (let point = 0; point < compiledfaces[face].length; point++) {
             sum += compiledfaces[face][point][zeroDimension];
+            listForMax.push(compiledfaces[face][point][zeroDimension]);
         }
         average = sum / compiledfaces[face].length;
+        //Experimental
+        // average = Math.max.apply(null, listForMax);
         orderedList.push({ average: average, faceindex: face });
     }
 

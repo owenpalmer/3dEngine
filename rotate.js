@@ -52,7 +52,7 @@ function rotatePoint(oX, oY, rX, rY, rotDeg) {
     return [x, y];
 }
 
-function rotateObject(array, oX, oY, deg, axis1, axis2) {
+function rotatePoints(array, oX, oY, deg, axis1, axis2) {
     for (point = 0; point < array.length; point++) {
         rot = rotatePoint(oX, oY, array[point][axis1], array[point][axis2], deg);
         array[point][axis1] = rot[0];

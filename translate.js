@@ -1,11 +1,10 @@
 function translatePoint(array, x = 0, y = 0, z = 0) {
-    array[0] += x;
-    array[1] += y;
-    array[2] += z;
-    return array;
+    array[0] = array[0] += x;
+    array[1] = array[1] += y;
+    array[2] = array[2] += z;
 }
 
-function translateObject(array, x = 0, y = 0, z = 0) {
+function translatePoints(array, x = 0, y = 0, z = 0) {
     for (let point = 0; point < array.length; point++) {
         array[point][0] = array[point][0] + x;
         array[point][1] = array[point][1] + y;
