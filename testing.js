@@ -9,12 +9,12 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function mouseMoveFunction(evt, downX, downY) {
+function mouseMoveFunction(evt, downX, downY, startOrbitZ, startOrbitY) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     mousePos = getMousePos(canvas, evt);
 
-    defaultScene.navTransforms.orbitZ += (downX - (mousePos.x)) / 100;
-    defaultScene.navTransforms.orbitY += (downY - (mousePos.y)) / 100;
+    defaultScene.navTransforms.orbitZ = startOrbitZ + ((downX - (mousePos.x)));
+    defaultScene.navTransforms.orbitY = startOrbitY + ((downY - (mousePos.y)) * .7);
 
     renderScene(defaultScene);
 }
@@ -31,9 +31,12 @@ canvas.addEventListener('mousedown', function (evt) {
     downX = mousePos.x;
     downY = mousePos.y;
 
+    startOrbitZ = defaultScene.navTransforms.orbitZ;
+    startOrbitY = defaultScene.navTransforms.orbitY;
+
     canvas.onmousemove = function (evt) {
         if (pressedMouse == true) {
-            mouseMoveFunction(evt, downX, downY);
+            mouseMoveFunction(evt, downX, downY, startOrbitZ, startOrbitY);
         }
     }
 
