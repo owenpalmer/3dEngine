@@ -23,6 +23,10 @@ function renderObject(object, scene) {
     translatePoints(newobject.points, worldOriginX, worldOriginY, 0);
     translatePoint(newobject.origin, worldOriginX, worldOriginY, 0);
 
+    //Apply pan
+    translatePoints(newobject.points, scene.navTransforms.panX, scene.navTransforms.panY, 0);
+    translatePoint(newobject.origin, scene.navTransforms.panX, scene.navTransforms.panY, 0);
+
     drawObject(newobject, 0, 1);
 
 }

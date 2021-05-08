@@ -9,12 +9,20 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function mouseMoveFunction(evt, downX, downY, startOrbitZ, startOrbitY) {
+function mouseOrbit(evt, downX, downY, startNav) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     mousePos = getMousePos(canvas, evt);
+    defaultScene.navTransforms.orbitZ = startNav.orbitZ + ((downX - (mousePos.x)));
+    defaultScene.navTransforms.orbitY = startNav.orbitY + ((downY - (mousePos.y)));
 
-    defaultScene.navTransforms.orbitZ = startOrbitZ + ((downX - (mousePos.x)));
-    defaultScene.navTransforms.orbitY = startOrbitY + ((downY - (mousePos.y)) * .7);
+    renderScene(defaultScene);
+}
+
+function mousePan(evt, downX, downY, startNav) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    mousePos = getMousePos(canvas, evt);
+    defaultScene.navTransforms.panX = startNav.panX - ((downX - (mousePos.x)));
+    defaultScene.navTransforms.panY = startNav.panY + ((downY - (mousePos.y)));
 
     renderScene(defaultScene);
 }
@@ -24,23 +32,31 @@ canvas.addEventListener('mousedown', function (evt) {
 
     pressedMouse = true;
 
-    canvas.onmouseup = function (evt) {
+    canvas.onmouseup = function (something) {
         pressedMouse = false;
     }
 
     downX = mousePos.x;
     downY = mousePos.y;
 
-    startOrbitZ = defaultScene.navTransforms.orbitZ;
-    startOrbitY = defaultScene.navTransforms.orbitY;
+    startNav = JSON.parse(JSON.stringify(defaultScene.navTransforms));
 
-    canvas.onmousemove = function (evt) {
+
+    canvas.onmousemove = function (e) {
         if (pressedMouse == true) {
-            mouseMoveFunction(evt, downX, downY, startOrbitZ, startOrbitY);
+            if (evt.button == 0) {
+                mouseOrbit(e, downX, downY, startNav);
+            }
+        }
+        if (pressedMouse == true) {
+            if (evt.button == 2) {
+                mousePan(e, downX, downY, startNav);
+            }
         }
     }
 
 }, false);
+window.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
 canvas.addEventListener('wheel', checkScrollDirection);
 

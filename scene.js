@@ -1,12 +1,13 @@
 defaultCube = cube;
 suzane = monke;
 
+defaultgrid = 0;
 // drawObject(defaultCube, 0, 1);
 
 defaultScene = {
     objects: [
-        suzane,
         // defaultCube,
+        suzane,
         // blob,
     ],
     navTransforms: {
@@ -16,5 +17,6 @@ defaultScene = {
         panX: 0,
         panY: 0,
         zoom: 1,
-    }
+    },
+    grid: defaultgrid,
 }
