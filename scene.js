@@ -1,14 +1,17 @@
 defaultCube = cube;
 suzane = monke;
 
-defaultgrid = 0;
-// drawObject(defaultCube, 0, 1);
+
+grid.display.wireframe = 1;
 
 defaultScene = {
     objects: [
+        grid,
         // defaultCube,
-        suzane,
-        // blob,
+        // suzane,
+        // newblob,
+        blob,
+        // dude,
     ],
     navTransforms: {
         orbitX: 0,
@@ -18,5 +21,7 @@ defaultScene = {
         panY: 0,
         zoom: 1,
     },
-    grid: defaultgrid,
+    display: {
+        wireframe: 1
+    }
 }

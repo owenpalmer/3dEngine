@@ -67,7 +67,7 @@ function importPLY(file) {
         faces.push(seperated);
     }
     faces = JSON.parse(JSON.stringify(faces))
-    return { points: points, faces: faces, origin, transformations: [] };
+    return { points: points, faces: faces, origin, transformations: [], display: { wireframe: 0 } };
 
 }
 
@@ -89,3 +89,7 @@ function createObjectOriginFromPoints(points) {
 cube = importPLY(cube);
 monke = importPLY(monke);
 blob = importPLY(blob);
+newblob = importPLY(newblob);
+dude = importPLY(dude);
+grid = importPLY(grid);
+

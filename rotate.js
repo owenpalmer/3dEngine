@@ -7,9 +7,14 @@ function toRadians(num) {
 }
 
 function rotatePoint(oX, oY, rX, rY, rotDeg) {
+    if (oX == rX && oY == rY) {
+        return [rX, rY];
+    }
+
     Xposneg = Math.sign((rX + .1) - oX);
     Yposneg = Math.sign((rY + .1) - oY);
     rotDeg = rotDeg * (Math.sign(Xposneg * Yposneg) * -1);
+
     // //PP
     // if (rX >= oX && rY >= oY) {
     //     rotDeg = rotDeg * -1;

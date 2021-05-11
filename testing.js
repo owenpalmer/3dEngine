@@ -1,4 +1,7 @@
+// rotatePoints(grid.points, 0, 0, .0001, 0, 2);
+// translatePoints(grid.points, 100, 100, 0);
 renderScene(defaultScene);
+
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -10,7 +13,6 @@ function getMousePos(canvas, evt) {
 }
 
 function mouseOrbit(evt, downX, downY, startNav) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     mousePos = getMousePos(canvas, evt);
     defaultScene.navTransforms.orbitZ = startNav.orbitZ + ((downX - (mousePos.x)));
     defaultScene.navTransforms.orbitY = startNav.orbitY + ((downY - (mousePos.y)));
@@ -19,13 +21,18 @@ function mouseOrbit(evt, downX, downY, startNav) {
 }
 
 function mousePan(evt, downX, downY, startNav) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     mousePos = getMousePos(canvas, evt);
     defaultScene.navTransforms.panX = startNav.panX - ((downX - (mousePos.x)));
     defaultScene.navTransforms.panY = startNav.panY + ((downY - (mousePos.y)));
 
     renderScene(defaultScene);
 }
+
+window.addEventListener('keydown', (event) => {
+    if (event.key == 'z') {
+        toggleWireframe();
+    }
+});
 
 canvas.addEventListener('mousedown', function (evt) {
     mousePos = getMousePos(canvas, evt);
@@ -62,12 +69,12 @@ canvas.addEventListener('wheel', checkScrollDirection);
 
 function checkScrollDirection(event) {
     if (checkScrollDirectionIsUp(event)) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         defaultScene.navTransforms.zoom += .1;
         renderScene(defaultScene);
     } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        defaultScene.navTransforms.zoom -= .1;
+        if (defaultScene.navTransforms.zoom > .15) {
+            defaultScene.navTransforms.zoom -= .1;
+        }
         renderScene(defaultScene);
     }
 }
@@ -77,4 +84,9 @@ function checkScrollDirectionIsUp(event) {
         return event.wheelDelta > 0;
     }
     return event.deltaY < 0;
+}
+
+function toggleWireframe() {
+    defaultScene.display.wireframe = Math.abs(defaultScene.display.wireframe - 1);
+    renderScene(defaultScene);
 }

@@ -3,6 +3,7 @@ worldOriginY = canvas.height / 2;
 
 
 function renderScene(scene) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let obj = 0; obj < scene.objects.length; obj++) {
         renderObject(scene.objects[obj], scene);
     }
@@ -27,6 +28,12 @@ function renderObject(object, scene) {
     translatePoints(newobject.points, scene.navTransforms.panX, scene.navTransforms.panY, 0);
     translatePoint(newobject.origin, scene.navTransforms.panX, scene.navTransforms.panY, 0);
 
-    drawObject(newobject, 0, 1);
+    Wireframe = newobject.display.wireframe;
+
+    if (scene.display.wireframe) {
+        Wireframe = 1;
+    }
+
+    drawObject(newobject, 0, 1, "red", Wireframe);
 
 }

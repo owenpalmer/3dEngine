@@ -1,5 +1,8 @@
 var ctx = document.getElementById("c").getContext('2d');
 var canvas = document.getElementById("c");
+canvas.width = document.body.clientWidth * .99;
+canvas.height = document.body.clientHeight * .95;
+
 
 function drawlinesimple(x1, y1, x2, y2, color = 'black') {
     ctx.beginPath();
@@ -26,11 +29,11 @@ function drawline3d(array, axis1, axis2, color = "red") {
     ctx.stroke();
 }
 
-function drawFace(array, axis1, axis2, color = "red") {
+function drawFace(array, axis1, axis2, color = "red", wireframe = 0) {
     randomColor = Math.floor(Math.random() * 16777215).toString(16);
     ctx.fillStyle = "#" + randomColor;
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = "red";
+    ctx.fillStyle = "grey";
+    ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (point = 0; point < array.length; point++) {
@@ -48,10 +51,12 @@ function drawFace(array, axis1, axis2, color = "red") {
     }
     ctx.closePath();
     ctx.stroke();
-    ctx.fill();
+    if (!wireframe) {
+        ctx.fill();
+    }
 }
 
-function drawObject(object, axis1, axis2, color = "red") {
+function drawObject(object, axis1, axis2, color = "red", wireframe = 0) {
     points = object.points;
     faces = object.faces;
     compiledfaces = [];
@@ -89,7 +94,7 @@ function drawObject(object, axis1, axis2, color = "red") {
     for (let face = 0; face < orderedList.length; face++) {
         faceindex = orderedList[face].faceindex;
         array = compiledfaces[faceindex];
-        drawFace(array, axis1, axis2, color);
+        drawFace(array, axis1, axis2, color, wireframe);
     }
 
 }
