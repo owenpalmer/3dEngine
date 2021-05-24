@@ -33,7 +33,6 @@ function renderObject(object, scene) {
     if (scene.display.wireframe) {
         Wireframe = 1;
     }
-
     drawObject(newobject, 0, 1, "red", Wireframe);
 
 }

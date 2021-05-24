@@ -65,6 +65,7 @@ function drawObject(object, axis1, axis2, color = "red", wireframe = 0) {
     // zeroDimension = 2;
     orderedList = [];
 
+    console.time('prepobj');
     for (let face = 0; face < faces.length; face++) {
         compiledface = [];
         for (i = 1; i <= faces[face][0]; i++) {
@@ -90,6 +91,7 @@ function drawObject(object, axis1, axis2, color = "red", wireframe = 0) {
     }
 
     orderedList.sort((a, b) => { return a.average - b.average; });
+    console.timeEnd('prepobj');
 
     for (let face = 0; face < orderedList.length; face++) {
         faceindex = orderedList[face].faceindex;

@@ -8,10 +8,11 @@ defaultScene = {
     objects: [
         grid,
         // defaultCube,
-        // suzane,
+        suzane,
         // newblob,
-        blob,
+        // blob,
         // dude,
+        // tree,
     ],
     navTransforms: {
         orbitX: 0,
@@ -22,6 +23,10 @@ defaultScene = {
         zoom: 1,
     },
     display: {
-        wireframe: 1
-    }
+        wireframe: 0
+    },
+    // options: {
+    //     selected: null,
+    //     transformType: loc,
+    // }
 }

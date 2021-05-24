@@ -92,4 +92,5 @@ blob = importPLY(blob);
 newblob = importPLY(newblob);
 dude = importPLY(dude);
 grid = importPLY(grid);
+tree = importPLY(tree);
 
